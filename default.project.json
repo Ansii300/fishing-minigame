@@ -18,6 +18,9 @@
 			},
 			"submodules": {
 				"$path": "submodules"
+			},
+			"test": {
+				"$path": "test"
 			}
 		}
 	}

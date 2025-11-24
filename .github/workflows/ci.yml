@@ -1,0 +1,18 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - uses: CompeyDev/setup-rokit@v0.1.2
+
+      - name: Check code quality
+        run: sh bin/check.sh
+
+      - name: Run tests
+        run: sh bin/test.sh

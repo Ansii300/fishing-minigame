@@ -3,8 +3,6 @@ local Players = game:GetService("Players")
 local Charm = require("../../../submodules/Charm")
 local fishingStore = require("../../shared/stores/fishingStore")
 
-type CatchingData = fishingStore.CatchingData
-
 local isFishing = Charm.computed(function()
 	return fishingStore.isFishing(Players.LocalPlayer.Name)
 end)

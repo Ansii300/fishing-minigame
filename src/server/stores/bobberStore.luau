@@ -19,9 +19,7 @@ local function getBobbers(): { [string]: BobberEntry }
 end
 
 local function addBobber(username: string, character: Model, power: number, rodId: string)
-	if state.bobbers[username] then
-		state.bobbers[username] = nil
-	end
+	state.bobbers[username] = nil
 	state.bobbers[username] = {
 		character = character,
 		power = power,

@@ -8,3 +8,6 @@
 [submodule "submodules/vendor/greentea"]
 	path = submodules/vendor/greentea
 	url = https://github.com/corecii/greentea
+[submodule "test/suite"]
+	path = test/suite
+	url = https://gist.github.com/littensy/fa9afcc5d66d25e86538634982be4ee4

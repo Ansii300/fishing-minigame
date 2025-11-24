@@ -53,8 +53,6 @@ Charm.observe(bobberStore.getBobbers, function(props, username)
 	local getSubmerged, setSubmerged = Charm.signal(false)
 	local bobber = createBobber(props)
 
-	shootBobberFromCharacter(bobber, props.character, props.power)
-
 	bobber.Part.Touched:Connect(function(touching)
 		if touching:HasTag("Water") and not getSubmerged() then
 			setSubmerged(true)
@@ -68,6 +66,8 @@ Charm.observe(bobberStore.getBobbers, function(props, username)
 	Charm.effect(function()
 		bobber.Part.Anchored = getSubmerged()
 	end)
+
+	shootBobberFromCharacter(bobber, props.character, props.power)
 
 	return function()
 		bobber:Destroy()

@@ -42,21 +42,21 @@ local function useMinigame(seed: number, rod: rods.Rod, fish: fishes.Fish): Mini
 	local recorder = replay.createRecorder(state)
 	local keyframe = createKeyframe(state)
 
-	local getLerpAlpha = usePolled(function()
+	local getInterpolation = usePolled(function()
 		local delta = os.clock() - keyframe.timestamp
 		return math.clamp(delta / TICK_RATE, 0, 1)
 	end)
 
 	local getBarPosition = derive(function()
-		return math.lerp(keyframe.barPosition, state.barPosition, getLerpAlpha())
+		return math.lerp(keyframe.barPosition, state.barPosition, getInterpolation())
 	end)
 
 	local getFishPosition = derive(function()
-		return math.lerp(keyframe.fishPosition, state.fishPosition, getLerpAlpha())
+		return math.lerp(keyframe.fishPosition, state.fishPosition, getInterpolation())
 	end)
 
 	local getProgress = derive(function()
-		return math.clamp(math.lerp(keyframe.progress, state.progress, getLerpAlpha()), 0, 1)
+		return math.clamp(math.lerp(keyframe.progress, state.progress, getInterpolation()), 0, 1)
 	end)
 
 	local function start()

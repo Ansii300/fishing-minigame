@@ -19,7 +19,15 @@ local function CastMeterView(visible: () -> boolean)
 	local speed = math.lerp(1.5, 2.5, math.random())
 	local timer = useTimer()
 
-	local function getProgress()
+	local transition = useSpringFrom(function()
+		return if visible() then 1 else 0
+	end, 0, 0.15)
+
+	local function transparency()
+		return 1 - transition()
+	end
+
+	local function getPower()
 		return math.abs((timer.time() * speed - 1) % 2 - 1)
 	end
 
@@ -32,17 +40,9 @@ local function CastMeterView(visible: () -> boolean)
 		end
 	end)
 
-	local transition = useSpringFrom(function()
-		return if visible() then 1 else 0
-	end, 0, 0.15)
-
-	local function transparency()
-		return 1 - transition()
-	end
-
 	effect(function()
 		if not inputStore.castRod() then
-			remotes.castRod:FireServer(getProgress())
+			remotes.castRod:FireServer(getPower())
 		end
 	end)
 
@@ -68,7 +68,7 @@ local function CastMeterView(visible: () -> boolean)
 				AnchorPoint = Vector2.new(0, 1),
 				Position = UDim2.fromScale(0, 1),
 				Size = function()
-					return UDim2.fromScale(1, math.lerp(0.075, 1, getProgress()))
+					return UDim2.fromScale(1, math.lerp(0.075, 1, getPower()))
 				end,
 
 				create("UICorner", {

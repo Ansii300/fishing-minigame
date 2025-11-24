@@ -23,7 +23,6 @@ type BoolInputActionProps = {
 local function BoolInputAction(props: BoolInputActionProps)
 	return create("InputAction", {
 		StateChanged = props.action,
-
 		Name = props.name,
 		Type = Enum.InputActionType.Bool,
 		Enabled = props.enabled,

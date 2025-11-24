@@ -4,9 +4,9 @@ local minigame = require("./minigame")
 export type MinigameState = minigame.MinigameState
 export type MinigameOptions = minigame.MinigameOptions
 
-export type SimulationResult = "fail" | "success" | "timeout"
-
 local TICK_RATE = constants.TICK_RATE
+
+export type SimulationResult = "fail" | "success" | "timeout"
 
 type InputList = { number }
 
@@ -20,7 +20,6 @@ local TIMEOUT = 0.5 -- 500 ms
 local function estimateSize(inputCount: number)
 	return 2 -- frame count (uint16)
 		+ 2 -- input count (uint16)
-		+ 1 -- initial input (uint8)
 		+ 2 * inputCount -- frame delta until input changes (uint16 each)
 end
 

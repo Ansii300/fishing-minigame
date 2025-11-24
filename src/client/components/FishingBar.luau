@@ -123,7 +123,7 @@ local function FishingBarView(visible: () -> boolean, seed: number, rod: rods.Ro
 			math.abs(progressSpeed) > 0.01 and create("TextLabel", {
 				Name = "ProgressSpeed",
 				FontFace = fonts.inter.semibold,
-				Text = `{numbers.displaySignedPercentage(progressSpeed)} Progress Speed`,
+				Text = `{numbers.signedPercentage(progressSpeed)} Progress Speed`,
 				TextColor3 = Color3.fromHex("#FFFFFF"),
 				TextSize = px(16),
 				TextYAlignment = Enum.TextYAlignment.Top,

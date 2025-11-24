@@ -1,10 +1,13 @@
 local constants = require("./constants")
 local fishes = require("./constants/fishes")
 local numbers = require("./utils/numbers")
+local polyfills = require("./utils/polyfills")
 local rods = require("./constants/rods")
 local stats = require("./stats")
 
 local TICK_RATE = constants.TICK_RATE
+
+local Random = polyfills.Random
 
 export type MinigameState = {
 	seed: number,
