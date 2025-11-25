@@ -1,8 +1,8 @@
 local Players = game:GetService("Players")
 
-local Charm = require("../../../../submodules/Charm")
-local bobberStore = require("../../stores/bobberStore")
-local fishingStore = require("../../../shared/stores/fishingStore")
+local Charm = require("../../../submodules/Charm")
+local fishingStore = require("../../shared/stores/fishingStore")
+local pools = require("../../shared/constants/pools")
 
 type BobberInstance = Model & {
 	Part: Part & {
@@ -24,14 +24,14 @@ local function shootBobberFromCharacter(bobber: BobberInstance, character: Model
 	bobber.Part:SetNetworkOwner(Players:GetPlayerFromCharacter(character))
 end
 
-local function createBobber(props: bobberStore.BobberEntry): BobberInstance
+local function createBobber(character: Model): BobberInstance
 	local bobber = Instance.new("Model")
 	bobber.Name = "Bobber"
 
 	local part = Instance.new("Part")
 	part.Shape = Enum.PartType.Ball
 	part.Size = Vector3.new(0.5, 0.5, 0.5)
-	part.CFrame = props.character:GetPivot() * CFrame.new(0, 0, -2)
+	part.CFrame = character:GetPivot() * CFrame.new(0, 0, -2)
 	part.CustomPhysicalProperties = PhysicalProperties.new(1, 1, 0, 1, 1)
 	part.Parent = bobber
 
@@ -42,41 +42,49 @@ local function createBobber(props: bobberStore.BobberEntry): BobberInstance
 	local alignOrientation = Instance.new("AlignOrientation")
 	alignOrientation.Mode = Enum.OrientationAlignmentMode.OneAttachment
 	alignOrientation.Attachment0 = attachment
-	alignOrientation.CFrame = props.character:GetPivot()
+	alignOrientation.CFrame = character:GetPivot()
 	alignOrientation.RigidityEnabled = true
 	alignOrientation.Parent = part
 
 	return bobber :: BobberInstance
 end
 
-Charm.observe(bobberStore.getBobbers, function(props, username)
-	local getSubmerged, setSubmerged = Charm.signal(false)
-	local bobber = createBobber(props)
+Charm.observe(fishingStore.getFishers, function(props, username)
+	local player = Players:FindFirstChild(username) :: Player?
+	local character = player and player.Character
 
-	bobber.Part.Touched:Connect(function(touching)
-		if touching:HasTag("Water") and not getSubmerged() then
-			setSubmerged(true)
-			fishingStore.setFishing(username, {
-				seed = tick(),
-				rodId = props.rodId,
-			})
+	if not character then
+		return
+	end
+
+	local bobber = createBobber(character)
+
+	local isSubmerged = Charm.computed(function()
+		return fishingStore.isLuring(username) or fishingStore.isReeling(username)
+	end)
+
+	local touched = bobber.Part.Touched:Connect(function(touching)
+		if not touching:HasTag("Water") or isSubmerged() then
+			return
+		end
+
+		local poolId = pools.getPoolIdFromInstance(touching)
+
+		if poolId then
+			fishingStore.setLuringPool(username, poolId)
 		end
 	end)
 
 	Charm.effect(function()
-		bobber.Part.Anchored = getSubmerged()
+		if isSubmerged() then
+			bobber.Part.Anchored = true
+			touched:Disconnect()
+		end
 	end)
 
-	shootBobberFromCharacter(bobber, props.character, props.power)
+	shootBobberFromCharacter(bobber, character, props.castPower)
 
 	return function()
 		bobber:Destroy()
-	end
-end)
-
--- Remove bobbers when players catch a fish or snap the line
-Charm.observe(fishingStore.getCatchingFishers, function(_, username)
-	return function()
-		bobberStore.removeBobber(username)
 	end
 end)

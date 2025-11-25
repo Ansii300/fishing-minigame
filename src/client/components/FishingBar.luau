@@ -191,7 +191,7 @@ local function FishingBarView(visible: () -> boolean, seed: number, rod: rods.Ro
 end
 
 local function FishingBar()
-	local getCatchingState = useSignalState(appStore.getCatchingState)
+	local getCatchingState = useSignalState(appStore.getReelingState)
 
 	local function isCatching()
 		return getCatchingState() ~= nil

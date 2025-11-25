@@ -1,13 +1,13 @@
 local Players = game:GetService("Players")
 
-local Charm = require("../../../../submodules/Charm")
-local fishes = require("../../../shared/constants/fishes")
-local fishingStore = require("../../../shared/stores/fishingStore")
-local remotes = require("../../../shared/remotes")
-local replay = require("../../../shared/replay")
-local rods = require("../../../shared/constants/rods")
+local Charm = require("../../../submodules/Charm")
+local fishes = require("../../shared/constants/fishes")
+local fishingStore = require("../../shared/stores/fishingStore")
+local remotes = require("../../shared/remotes")
+local replay = require("../../shared/replay")
+local rods = require("../../shared/constants/rods")
 
-type CatchingData = fishingStore.CatchingData
+type CatchingData = fishingStore.FisherReeling
 type MinigameOptions = replay.MinigameOptions
 type SimulationResult = replay.SimulationResult
 
@@ -21,7 +21,7 @@ local function validateCatch(options: MinigameOptions, replayData: buffer): Simu
 	return replay.simulate(frames, inputs, options)
 end
 
-Charm.observe(fishingStore.getCatchingFishers, function(data, username)
+Charm.observe(fishingStore.getFishersReeling, function(data, username)
 	local player = Players:FindFirstChild(username)
 
 	if not player or not player:IsA("Player") then
@@ -36,16 +36,16 @@ Charm.observe(fishingStore.getCatchingFishers, function(data, username)
 
 	local bestResult, minimumTime = replay.simulatePerfectGame(options)
 	local startTime = os.clock()
-	local processed = false
+	local caught = false
 
 	local function shouldCheckSuccess()
 		return bestResult == "success" and (os.clock() - startTime + TIME_LENIENCY) >= minimumTime
 	end
 
-	local function processCatch(result: FishingResult)
-		if not processed then
-			processed = true
-			fishingStore.removePlayer(username)
+	local function onCatch(result: FishingResult)
+		if not caught then
+			caught = true
+			fishingStore.stopFishing(username)
 			remotes.caughtFish:FireAllClients(player, data.fishId, result == "success")
 		end
 	end
@@ -54,16 +54,16 @@ Charm.observe(fishingStore.getCatchingFishers, function(data, username)
 		remotes.assert(remotes.catchFish, replayData)
 
 		if player == sender then
-			processCatch(if shouldCheckSuccess() then validateCatch(options, replayData) else "fail")
+			onCatch(if shouldCheckSuccess() then validateCatch(options, replayData) else "fail")
 		end
 	end)
 
 	local thread = task.delay(MAX_PLAY_TIME, function()
-		processCatch("timeout")
+		onCatch("timeout")
 	end)
 
 	return function()
-		processCatch("cancelled")
+		onCatch("cancelled")
 		catchFish:Disconnect()
 		if coroutine.status(thread) == "suspended" then
 			task.cancel(thread)

@@ -41,7 +41,7 @@ local function Inputs()
 	local getRod = useRod()
 	local isFishing = useSignalState(appStore.isFishing)
 	local isLuring = useSignalState(appStore.isLuring)
-	local isCatching = useSignalState(appStore.isCatching)
+	local isCatching = useSignalState(appStore.isReeling)
 
 	return create("InputContext", {
 		Name = "GameplayContext",

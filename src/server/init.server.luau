@@ -1,10 +1,10 @@
 --[[
-	Reparent the server folder to a non-replicated instance to prevent clients 
+	Reparent the server's files to a non-replicated instance to prevent clients 
 	from accessing server-only scripts.
 ]]
 
-local source: Folder = script:FindFirstAncestor("server")
 local destination = Instance.new("Camera")
+local source: Instance = script
 
 destination.Name = source.Name
 destination.Parent = source.Parent

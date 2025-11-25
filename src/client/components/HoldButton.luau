@@ -10,7 +10,7 @@ local show = Vide.show
 local useSignalState = VideCharm.useSignalState
 
 local function HoldButton()
-	return show(useSignalState(appStore.isCatching), function()
+	return show(useSignalState(appStore.isReeling), function()
 		local getPreferredInput = usePreferredInput()
 
 		return Button({

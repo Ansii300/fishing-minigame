@@ -13,6 +13,7 @@ local useTransparency = require("../hooks/useTransparency")
 local create = Vide.create
 local effect = Vide.effect
 local show = Vide.show
+local untrack = Vide.untrack
 local useSignalState = VideCharm.useSignalState
 
 local function CastMeterView(visible: () -> boolean)
@@ -21,11 +22,11 @@ local function CastMeterView(visible: () -> boolean)
 
 	local transition = useSpringFrom(function()
 		return if visible() then 1 else 0
-	end, 0, 0.15)
+	end, 0, 0.3)
 
-	local function transparency()
-		return 1 - transition()
-	end
+	local transparency = useSpringFrom(function()
+		return if visible() then 0 else 1
+	end, 1, 0.15)
 
 	local function getPower()
 		return math.abs((timer.time() * speed - 1) % 2 - 1)
@@ -41,7 +42,7 @@ local function CastMeterView(visible: () -> boolean)
 	end)
 
 	effect(function()
-		if not inputStore.castRod() then
+		if not inputStore.castRod() and untrack(timer.time) > 0.2 then
 			remotes.castRod:FireServer(getPower())
 		end
 	end)

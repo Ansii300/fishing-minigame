@@ -11,17 +11,17 @@ local isLuring = Charm.computed(function()
 	return fishingStore.isLuring(Players.LocalPlayer.Name)
 end)
 
-local isCatching = Charm.computed(function()
-	return fishingStore.isCatching(Players.LocalPlayer.Name)
+local isReeling = Charm.computed(function()
+	return fishingStore.isReeling(Players.LocalPlayer.Name)
 end)
 
-local getCatchingState = Charm.computed(function()
-	return fishingStore.getCatchingState(Players.LocalPlayer.Name)
+local getReelingState = Charm.computed(function()
+	return fishingStore.getReelingState(Players.LocalPlayer.Name)
 end)
 
 return {
 	isFishing = isFishing,
 	isLuring = isLuring,
-	isCatching = isCatching,
-	getCatchingState = getCatchingState,
+	isReeling = isReeling,
+	getReelingState = getReelingState,
 }
