@@ -11,3 +11,7 @@ Players.PlayerRemoving:Connect(function(player)
 	store:unload(player)
 	accountStore.removeAccount(player.Name)
 end)
+
+game:BindToClose(function()
+	store:closeAsync()
+end)

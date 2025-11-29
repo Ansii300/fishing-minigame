@@ -49,9 +49,21 @@ local function reconcile<T>(target: T & {}, source: T & {})
 	end
 end
 
+local function deepCopy<T>(source: T): T
+	if type(source) ~= "table" then
+		return source
+	end
+	local copy = {}
+	for key, value in source :: any do
+		copy[key] = deepCopy(value)
+	end
+	return copy
+end
+
 return {
 	map = map,
 	filter = filter,
 	keys = keys,
 	reconcile = reconcile,
+	deepCopy = deepCopy,
 }
