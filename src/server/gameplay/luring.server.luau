@@ -15,8 +15,8 @@ local SHAKE_REDUCTION = 0.5
 
 local random = Random.new()
 
-Charm.observe(fishingStore.getFishersLuring, function(fisherProxy: FisherLuring, username: string)
-	local rod = rods.getRod(fisherProxy.rodId)
+Charm.observe(fishingStore.getFishersLuring, function(fisher: FisherLuring, username: string)
+	local rod = rods.getRod(fisher.rodId)
 	local timer = stats.getLureTime(rod.lureSpeed)
 	local cooldown = os.clock() + SHAKE_COOLDOWN
 
@@ -31,7 +31,7 @@ Charm.observe(fishingStore.getFishersLuring, function(fisherProxy: FisherLuring,
 		timer -= delta
 		if timer <= 0 then
 			fishingStore.setReelingFish(username, {
-				fishId = pools.getRandomFishFromPool(fisherProxy.poolId),
+				fishId = pools.getRandomFishFromPool(fisher.poolId),
 				weightMultiplier = random:NextNumber(0.5, 1.5),
 				mutations = mutations.selectMutations(),
 			})

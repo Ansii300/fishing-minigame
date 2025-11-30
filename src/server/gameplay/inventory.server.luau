@@ -34,8 +34,8 @@ observers.observePlayers(function(player)
 			return if account then account.fishes else {}
 		end
 
-		return Charm.observe(getFishes, function(fishProxy, uniqueId)
-			local tool = createFishTool(fishProxy, uniqueId)
+		return Charm.observe(getFishes, function(fish, uniqueId)
+			local tool = createFishTool(fish, uniqueId)
 			tool.Parent = backpack
 			return function()
 				tool:Destroy()

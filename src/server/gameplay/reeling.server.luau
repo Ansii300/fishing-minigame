@@ -22,7 +22,7 @@ local function validateCatch(options: MinigameOptions, replayData: buffer): Simu
 	return replay.simulate(frames, inputs, options)
 end
 
-Charm.observe(fishingStore.getFishersReeling, function(fisherProxy: FisherReeling, username: string): (() -> ())?
+Charm.observe(fishingStore.getFishersReeling, function(fisher: FisherReeling, username: string): (() -> ())?
 	local player = Players:FindFirstChild(username)
 
 	if not player or not player:IsA("Player") then
@@ -30,9 +30,9 @@ Charm.observe(fishingStore.getFishersReeling, function(fisherProxy: FisherReelin
 	end
 
 	local options: MinigameOptions = {
-		seed = fisherProxy.seed,
-		rod = rods.getRod(fisherProxy.rodId),
-		fish = fishes.getFish(fisherProxy.fish.fishId),
+		seed = fisher.seed,
+		rod = rods.getRod(fisher.rodId),
+		fish = fishes.getFish(fisher.fish.fishId),
 	}
 
 	local bestResult, minimumTime = replay.simulatePerfectGame(options)
@@ -52,7 +52,7 @@ Charm.observe(fishingStore.getFishersReeling, function(fisherProxy: FisherReelin
 			end
 
 			fishingStore.stopFishing(username)
-			remotes.caughtFish:FireAllClients(player, Charm.toRaw(fisherProxy).fish, result == "success")
+			remotes.caughtFish:FireAllClients(player, Charm.toRaw(fisher).fish, result == "success")
 		end
 	end
 
