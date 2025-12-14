@@ -7,7 +7,7 @@ local function usePolled<T>(callback: (elapsed: number, delta: number) -> T): ()
 	local timer = 0
 	local result = Vide.source(callback(0, 0))
 
-	useEventListener(RunService.Heartbeat, function(delta)
+	useEventListener(RunService.Heartbeat, function(delta: number)
 		timer += delta
 		result(callback(timer, delta))
 	end)
