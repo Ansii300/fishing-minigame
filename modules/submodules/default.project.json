@@ -8,7 +8,7 @@
 		"gt": { "$path": "./greentea/src" },
 		"Lyra": { "$path": "./lyra/src" },
 		"Promise": { "$path": "./promise/lib" },
-		"t": { "$path": "./t/lib" },
+		"t": { "$path": "./t.luau" },
 		"Vide": { "$path": "./vide/src" },
 		"VideCharm": { "$path": "./charm/packages/vide-charm/src" }
 	}

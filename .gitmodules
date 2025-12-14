@@ -14,9 +14,6 @@
 [submodule "tests/test"]
 	path = tests/test
 	url = https://gist.github.com/littensy/fa9afcc5d66d25e86538634982be4ee4
-[submodule "modules/submodules/t"]
-	path = modules/submodules/t
-	url = https://github.com/osyrisrblx/t
 [submodule "modules/submodules/greentea"]
 	path = modules/submodules/greentea
 	url = https://github.com/Corecii/GreenTea
